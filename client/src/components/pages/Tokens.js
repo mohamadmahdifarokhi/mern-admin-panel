@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
 // import TokenAddModal from "../partials/TokenAddModal";
-import TokenUpdateModal from "../partials/TokenUpdateModal";
+// import TokenUpdateModal from "../partials/TokenUpdateModal";
 import { toast, ToastContainer } from "react-toastify";
 
 class Tokens extends Component {
