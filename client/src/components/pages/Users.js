@@ -127,14 +127,20 @@ class Users extends Component {
         this.getData()
     }
 
-    getData() {
-        axios
-            .post("/api/user-data")
-            .then(res => {
-                this.setState({ records: res.data})
-            })
-            .catch()
-    }
+   getData() {
+    axios.get("http://127.0.0.1:8002/users/reads", {
+            params: {
+                skip: 0,
+                limit: 10
+            }
+        })
+        .then(res => {
+            this.setState({ records: res.data })
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
+}
 
     editRecord(record) {
         this.setState({ currentRecord: record});
