@@ -146,19 +146,26 @@ class Users extends Component {
         this.setState({ currentRecord: record});
     }
 
-    deleteRecord(record) {
-        axios
-            .post("/api/user-delete", {_id: record._id})
-            .then(res => {
-                if (res.status === 200) {
-                   toast(res.data.message, {
-                       position: toast.POSITION.TOP_CENTER,
-                   })
-                }
-            })
-            .catch();
-        this.getData();
-    }
+  deleteRecord(record) {
+    axios
+        .delete(`http://127.0.0.1:8002/users/delete/${record._id}`, {
+            headers: {
+                Accept: "application/json"
+            }
+        })
+        .then(res => {
+            if (res.status === 200) {
+                toast.success(res.data.message, {
+                    position: toast.POSITION.TOP_CENTER
+                });
+                this.getData();
+            }
+        })
+        .catch(error => {
+            console.error("Error deleting record:", error);
+            // Handle error here
+        });
+}
 
     pageChange(pageData) {
         console.log("OnPageChange", pageData);

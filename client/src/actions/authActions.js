@@ -20,22 +20,32 @@ export const registerUser = (userData, history) => dispatch => {
 };
 
 export const loginUser = userData => dispatch => {
+    console.log(userData, "qwewqe")
+const formData = new URLSearchParams();
+    formData.append('username', userData.username);
+    formData.append('password', userData.password);
     axios
-        .post("/api/login", userData)
+        .post("http://127.0.0.1:8002/users", formData, {
+            headers: {
+                'accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        })
         .then(res => {
-            const { token } = res.data;
-            localStorage.setItem("jwtToken", token);
-            setAuthToken(token);
-            const decoded = jwt_decode(token);
+            const { access_token } = res.data;
+            localStorage.setItem("jwtToken", access_token);
+            setAuthToken(access_token);
+            const decoded = jwt_decode(access_token);
             dispatch(setCurrentUser(decoded));
         })
-        .catch(err =>
+        .catch(err => {
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data
-            })
-        );
+            });
+        });
 };
+
 
 export const setCurrentUser = decoded => {
     return {
