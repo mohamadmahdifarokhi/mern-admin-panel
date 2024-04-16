@@ -32,7 +32,7 @@ mongoose.connect(db, { useNewUrlParser: true })
 app.use(passport.initialize());
 
 app.use('/api', users);
-app.use('/api', tokens);
+// app.use('/api', tokens);
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 

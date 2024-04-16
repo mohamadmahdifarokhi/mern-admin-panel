@@ -7,7 +7,7 @@ import ReactDatatable from '@ashvin27/react-datatable';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
-import TokenAddModal from "../partials/TokenAddModal";
+// import TokenAddModal from "../partials/TokenAddModal";
 import TokenUpdateModal from "../partials/TokenUpdateModal";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -162,8 +162,8 @@ class Tokens extends Component {
                 <Navbar />
                 <div className="d-flex" id="wrapper">
                     <Sidebar />
-                    <TokenAddModal />
-                    <TokenUpdateModal record={this.state.currentRecord} />
+                    {/*<TokenAddModal />*/}
+                    {/*<TokenUpdateModal record={this.state.currentRecord} />*/}
                     <div id="page-content-wrapper">
                         <div className="container-fluid">
                             <button className="btn btn-link mt-3" id="menu-toggle"><FontAwesomeIcon icon={faList} /></button>
