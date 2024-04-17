@@ -1,15 +1,15 @@
-import React, { Component, Fragment } from "react";
+import React, {Component, Fragment} from "react";
 import Navbar from "../partials/Navbar";
 import Sidebar from "../partials/Sidebar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faList, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faList, faPlus} from "@fortawesome/free-solid-svg-icons";
 import ReactDatatable from '@ashvin27/react-datatable';
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import axios from "axios";
-// import TokenAddModal from "../partials/TokenAddModal";
-// import TokenUpdateModal from "../partials/TokenUpdateModal";
-import { toast, ToastContainer } from "react-toastify";
+import TokenAddModal from "../partials/TokenAddModal";
+// import TokenUpdateModal from "../partials/TokenUpdateModal.js";
+import {toast, ToastContainer} from "react-toastify";
 
 class Tokens extends Component {
 
@@ -60,7 +60,7 @@ class Tokens extends Component {
                                 data-target="#update-token-modal"
                                 className="btn btn-primary btn-sm"
                                 onClick={() => this.editRecord(record)}
-                                style={{ marginRight: '5px' }}>
+                                style={{marginRight: '5px'}}>
                                 <i className="fa fa-edit"></i>
                             </button>
                             <button
@@ -127,29 +127,44 @@ class Tokens extends Component {
 
     getData() {
         axios
-            .post("/api/token-data")
-            .then(res => {
-                this.setState({ records: res.data })
+            .get("http://127.0.0.1:8002/tokens/reads", {
+                headers: {
+                    "Accept": "application/json"
+                }
             })
-            .catch()
+            .then(res => {
+                this.setState({records: res.data})
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                // Handle errors here
+            });
     }
 
     editRecord(record) {
-        this.setState({ currentRecord: record });
+        this.setState({currentRecord: record});
     }
 
     deleteRecord(record) {
         axios
-            .post("/api/token-delete", { _id: record._id })
+            .delete(`http://127.0.0.1:8002/tokens/delete/${record._id}`, {
+                headers: {
+                    "Accept": "application/json"
+                }
+            })
             .then(res => {
                 if (res.status === 200) {
                     toast(res.data.message, {
                         position: toast.POSITION.TOP_CENTER,
                     })
                 }
+                // Fetch updated data after successful deletion
+                this.getData();
             })
-            .catch();
-        this.getData();
+            .catch(error => {
+                console.error("Error deleting record:", error);
+                // Handle errors here
+            });
     }
 
     pageChange(pageData) {
@@ -159,15 +174,18 @@ class Tokens extends Component {
     render() {
         return (
             <div>
-                <Navbar />
+                <Navbar/>
                 <div className="d-flex" id="wrapper">
-                    <Sidebar />
-                    {/*<TokenAddModal />*/}
-                    {/*<TokenUpdateModal record={this.state.currentRecord} />*/}
+                    <Sidebar/>
+                    <TokenAddModal/>
+                    {/*<TokensUpdateModal record={this.state.currentRecord}/>*/}
                     <div id="page-content-wrapper">
                         <div className="container-fluid">
-                            <button className="btn btn-link mt-3" id="menu-toggle"><FontAwesomeIcon icon={faList} /></button>
-                            <button className="btn btn-outline-primary float-right mt-3 mr-2" data-toggle="modal" data-target="#add-token-modal"><FontAwesomeIcon icon={faPlus} /> Add Token</button>
+                            <button className="btn btn-link mt-3" id="menu-toggle"><FontAwesomeIcon icon={faList}/>
+                            </button>
+                            <button className="btn btn-outline-primary float-right mt-3 mr-2" data-toggle="modal"
+                                    data-target="#add-token-modal"><FontAwesomeIcon icon={faPlus}/> Add Token
+                            </button>
                             <h1 className="mt-2 text-primary">Tokens List</h1>
                             <ReactDatatable
                                 config={this.config}
@@ -177,7 +195,7 @@ class Tokens extends Component {
                             />
                         </div>
                     </div>
-                    <ToastContainer />
+                    <ToastContainer/>
                 </div>
             </div>
         );
