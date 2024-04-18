@@ -135,6 +135,7 @@ class Users extends Component {
             }
         })
         .then(res => {
+                console.log(res.data)
             this.setState({ records: res.data })
         })
         .catch(error => {

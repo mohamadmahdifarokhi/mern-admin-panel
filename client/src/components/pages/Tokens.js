@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import axios from "axios";
 import TokenAddModal from "../partials/TokenAddModal";
-// import TokenUpdateModal from "../partials/TokenUpdateModal.js";
+import TokenUpdateModal from "../partials/TokenUpdateModal.js";
 import {toast, ToastContainer} from "react-toastify";
 
 class Tokens extends Component {
@@ -178,7 +178,7 @@ class Tokens extends Component {
                 <div className="d-flex" id="wrapper">
                     <Sidebar/>
                     <TokenAddModal/>
-                    {/*<TokensUpdateModal record={this.state.currentRecord}/>*/}
+                    <TokenUpdateModal record={this.state.currentRecord}/>
                     <div id="page-content-wrapper">
                         <div className="container-fluid">
                             <button className="btn btn-link mt-3" id="menu-toggle"><FontAwesomeIcon icon={faList}/>

@@ -22,6 +22,8 @@ export const addToken = (tokenData) => dispatch => {
 };
 
 export const updateToken = (tokenId, tokenData) => dispatch => {
+    console.log(tokenId)
+    console.log(tokenData)
     axios
         .patch(`http://127.0.0.1:8002/tokens/update/${tokenId}`, tokenData)
         .then(res =>

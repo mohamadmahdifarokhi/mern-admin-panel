@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import $ from 'jquery';
 
 import 'react-toastify/dist/ReactToastify.css';
+import classnames from "classnames";
 
 class TokenUpdateModal extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class TokenUpdateModal extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.record) {
             this.setState({
-                id: nextProps.record.id,
+                id: nextProps.record._id,
                 token: nextProps.record.token,
                 email: nextProps.record.email,
                 expired_at: nextProps.record.expired_at
@@ -62,13 +63,16 @@ class TokenUpdateModal extends React.Component {
 
     onTokenUpdate = e => {
         e.preventDefault();
+        console.log(this.state, "asdasd")
+
         const newToken = {
             _id: this.state.id,
             token: this.state.token,
             email: this.state.email,
             expired_at: this.state.expired_at
         };
-        this.props.updateToken(newToken);
+        this.props.updateToken(this.state.id, newToken);
+        window.location.reload()
     };
 
     render() {

@@ -67,7 +67,9 @@ class UserUpdateModal extends React.Component {
             email: this.state.email,
             password: this.state.password
         };
-        this.props.updateUser(newUser);
+        this.props.updateUser(this.state.id, newUser);
+        window.location.reload()
+
     };
 
     render() {
